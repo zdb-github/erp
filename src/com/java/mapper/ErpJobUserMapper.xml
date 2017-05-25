@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpJobUserMapper">
+	
+	<insert id="add" parameterType="erpJobUser">
+		INSERT INTO ERP_JOB_USER (ID,JOB_ID,USER_ID)
+		VALUES(#{id},#{job_id},#{user_id})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_JOB_USER WHERE ID =#{id}
+	</delete>
+	
+	<update id="update" parameterType="erpJobUser">
+		UPDATE ERP_JOB_USER
+		<set>
+			<if test="job_id!=null and job_id!=''">
+				JOB_ID=#{job_id},
+			</if>
+			<if test="user_id!=null and user_id !=''">
+				USER_ID =#{user_id},
+			</if>
+		</set>
+		WHERE ID =#{id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpJobUser">
+		SELECT * FROM ERP_JOB_USER WHERE JOB_ID LIKE #{job_id}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpJobUser">
+		SELECT * FROM ERP_JOB_USER WHERE ID=#{id}
+	</select>
+	
+	<select id="getByUser_id" parameterType="String" resultType="erpJobUser">
+		SELECT * FROM ERP_JOB_USER WHERE USER_ID=#{user_id}
+	</select>
+	
+
+</mapper>

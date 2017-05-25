@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpCustomerMapper" >
+	<!-- 添加客户 -->
+	<insert id="add" parameterType="erpCustomer">
+	INSERT INTO ERP_CUSTOMER(ID,NAME,SEX,AGE,ADDRESS,COMPANY,PHONE,C_TYPE)VALUES(#{id},#{name},#{sex},#{age},#{address},
+	#{company},#{phone},#{c_type})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+	DELETE FROM ERP_CUSTOMER WHERE ID=#{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpCustomer">
+	UPDATE ERP_CUSTOMER
+		<set>
+			<if test="name!=null and name!=''">
+			NAME=#{name},
+			</if>
+			<if test="sex!=null and sex!=''">
+			SEX=#{sex},
+			</if>
+			<if test="age!=null and age!=''">
+			AGE=#{age},
+			</if>
+			<if test="address!=null and address!=''">
+			ADDRESS=#{address},
+			</if>
+			<if test="company!=null and company!=''">
+			COMPANY=#{company},
+			</if>
+			<if test="phone!=null and phone!=''">
+			PHONE=#{phone},
+			</if>
+			<if test="c_type!=null and phone!=''">
+			C_TYPE=#{c_type},
+			</if>
+		</set>
+			WHERE ID=#{id}
+	</update>
+	
+	<!-- 按id查找 -->
+	<select id="getById" parameterType="java.lang.String" resultType="erpCustomer">
+	SELECT * FROM ERP_CUSTOMER WHERE ID=#{id}
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getAll" parameterType="java.lang.String" resultType="erpCustomer">
+	SELECT * FROM ERP_CUSTOMER WHERE NAME LIKE '%${value}%'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpRequisitionMapper">
+	
+	
+	<!-- 调拨单 -->
+	<!-- 添加调拨单 -->
+	<insert id="add" parameterType="erpRequisition">
+		INSERT INTO ERP_REQUISITION (REQUISITION_ID,GOODS_ID,OUT_WAREHOUSE_ID,IN_WAREHOUSE_ID,
+		NUM,REQUISITION_STATE,DESCRIBE,OUT_TIME) VALUES(#{requisition_id},#{goods_id},#{out_warehouse_id},#{in_warehouse_id},#{num},#{requision_state},#{describe},#{out_time})
+	</insert>
+	
+	<!-- 查看所有的调拨单 根据调拨单的状态查看所有调拨单 -->
+	<select id="getAll" parameterType="String" resultType="erpRequisition">
+		SELECT REQUISITION_ID,GOODS_ID,OUT_WAREHOUSE_ID,IN_WAREHOUSE_ID,NUM,REQUISITION_STATE,DESCRIBE,OUT_TIME 
+		FROM ERP_REQUISITION WHERE REQUISITION_STATE LIKE #{REQUISITION_STATE}
+	</select>
+	
+	<!-- 修改调拨单 -->
+	<update id="update" parameterType="erpRequisition">
+		UPDATE  ERP_REQUISITION
+		<set>
+			<if test="num!=null and goods_id!=''">
+				NUM=#{num},
+			</if>
+			<if test="requision_state!=null and goods_num!=''">
+				REQUISITION_STATE=#{requision_state},
+			</if>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id}
+			</if>
+			<if test="out_warehouse_id!=null and out_warehouse_id!=''">
+				OUT_WAREHOUSE_ID=#{out_warehouse_id}
+			</if>
+			<if test="in_warehouse_id!=null and in_warehouse!=''">
+				IN_WAREHOUSE_ID=#{in_warehouse_id}
+			</if>
+			<if test="describe!=null and describe!=''">
+				DESCRIBE=#{describe}
+			</if>
+			<if test="out_time!=null and out_time!=''">
+				OUT_TIME=#{out_time}
+			</if>
+		</set>
+		WHERE REQUISITION_ID=#{requisition_id}
+	</update>
+	<!-- 删除调拨单 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_REQUISITION WHERE REQUISITION_ID=#{requisition_id}
+	</delete>
+	
+	<!-- 通过id查找 -->
+	<select id="getById" parameterType="String" resultType="erpRequisition">
+		SELECT GOODS_ID,OUT_WAREHOUSE_ID,IN_WAREHOUSE_ID,NUM,REQUISITION_STATE,DESCRIBE,OUT_TIME 
+		FROM ERP_REQUISITION WHERE REQUISITION _ID=#{requisition_id}
+	</select>
+	
+	
+	
+</mapper>

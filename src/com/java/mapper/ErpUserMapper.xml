@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpUserMapper" >
+
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpUser">
+	INSERT INTO ERP_USER(ID,NAME,SEX,AGE,ID_CARD,DEPT_ID,PHONE,EMAIL,REMARKS,JOB_ID)VALUES(#{id},#{name},#{sex},#{age},#{id_card},
+	#{dept_id},#{phone},#{email},#{remarks},#{job_id})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+	DELETE FROM ERP_USER WHERE ID=#{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpUser">
+	UPDATE ERP_USER
+		<set>
+			<if test="name!=null and name!=''">
+			NAME=#{name},
+			</if>
+			<if test="sex!=null and sex!=''">
+			SEX=#{sex},
+			</if>
+			<if test="age!=null and age!=''">
+			AGE=#{age},
+			</if>
+			<if test="id_card!=null and id_card!=''">
+			ID_CARD=#{id_card},
+			</if>
+			<if test="dept_id!=null and dept_id!=''">
+			DEPT_ID=#{dept_id},
+			</if>
+			<if test="phone!=null and phone!=''">
+			PHONE=#{phone},
+			</if>
+			<if test="email!=null and email!=''">
+			EMAIL=#{email},
+			</if>
+			<if test="remarks!=null and remarks!=''">
+			REMARKS=#{remarks},
+			</if>
+			<if test="job_id!=null and job_id!=''">
+			JOB_ID=#{job_id},
+			</if>
+		</set>
+			WHERE ID=#{id}
+	</update>
+	
+	<!-- 按id查找 -->
+	<select id="getById" parameterType="java.lang.String" resultType="erpUser">
+	SELECT * FROM ERP_USER WHERE ID=#{id}
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getAll" parameterType="java.lang.String" resultType="erpUser">
+	SELECT * FROM ERP_USER WHERE NAME LIKE '%${value}%'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+

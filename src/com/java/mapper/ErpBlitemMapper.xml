@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpBlitemMapper">
+	
+	<!-- 这是一张盘点单-->
+	
+	<select id="getById" parameterType="String" resultType="erpBlitem">
+		SELECT * FROM ERP_BLITEM WHERE BLITEM_ID=#{blitem_id}
+	</select>
+	
+	 <!-- 查询所有根据仓库id 查询部分信息-->
+	<select id="getAll" parameterType="String" resultType="erpBlitem">
+		SELECT * FROM ERP_BLITEM WHERE WAREHOUSE_ID LIKE #{warehouse_id}
+	</select>
+	
+	<!-- 添加盘点单 -->
+	
+	<insert id="add" parameterType="erpBlitem">
+		INSERT INTO ERP_BLITEM (BLITEM_ID,WAREHOUSE_ID,GOODS_ID,NUM,CHECK_NUM,PROFIT_AND_LOSS,HANDLER_ID) VALUES(#{blitem_id},#{warehouse_id},#{goods_id},#{num},#{check_num},#{profit_and_loss},#{handler_id})
+	</insert>
+	
+	
+	<!-- 删除盘点单 -->
+	<delete id="delete" parameterType="java.lang.String">
+	 DELETE FROM ERP_BLITEM WHERE BLITEM_ID=#{blitem_id}
+	</delete>
+	
+	<!-- 通过仓库的id获取仓库中所有的List<ErpBlitem> -->
+	<select id="getByWarehouseId" parameterType="String" resultType="erpBlitem">
+		SELECT BLITEM_ID,WAREHOUSE_ID,GOODS_ID,NUM,CHECK_NUM, PROFIT_AND_LOSS,HANDLER_ID FROM ERP_BLITEM WHERE WAREHOUSE_ID=#{warehouse_id}
+	</select>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpBlitem">
+		UPDATE ERP_BLITEM 
+		<set>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id},
+			</if>
+			<if test="num!=null and num!=''">
+				NUM=#{num},
+			</if>
+			<if test="check_num!=null and check_num!=''">
+				CHECK_NUM=#{check_num},
+			</if>
+			<if test="profit_and_loss!=null and profit_and_loss!=''">
+				PROFIT_AND_LOSS=#{profit_and_loss},
+			</if>
+			<if test="handler_id!=null and handler_id!=''">
+				HANDLER_ID=#{handler_id},
+			</if>
+		</set>
+		WHERE BLITEM_ID=#{blitem_id}
+	</update>
+	
+	
+	<!-- 
+	
+	//根据仓库的id和商品的id获取盘点单中的对象集合
+	public List<ErpBlitem> getByWIAndGI(@Param("warehouse_id") String warehouse_id,
+			@Param("goods_id") String goods_id);
+	
+	 -->
+	<select id="getByWIAndGI" parameterType="String" resultType="erpBlitem">
+		SELECT * FROM ERP_Blitem   WHERE WAREHOUSE_ID=#{warehouse_id} AND GOODS_ID=#{goods_id}	
+	</select>
+	
+	
+	
+</mapper>

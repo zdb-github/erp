@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpCommentMapper" >
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpComment">
+	INSERT INTO ERP_COMMENT (ID,CONTENT,COMMENT_TIME,ACCOUNT_ID) VALUES(#{id},#{content},
+	#{comment_time},#{account_id})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+	DELETE FROM ERP_COMMENT WHERE ID=#{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpComment">
+	UPDATE ERP_COMMENT
+		<set>
+			<if test="content!=null and content!=''">
+			CONTENT=#{content},
+			</if>
+			<if test="comment_time!=null and comment_time!=''">
+			COMMENT_TIME=#{comment_time},
+			</if>
+			<if test="account_id!=null and account_id!=''">
+			ACCOUNT_ID=#{account_id},
+			</if>
+		</set>
+		WHERE ID=#{id}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

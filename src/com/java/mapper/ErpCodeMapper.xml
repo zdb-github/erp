@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpCodeMapper" >
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpCode">
+	INSERT INTO ERP_CODE(ID,KEY,VALUE,TYPE)VALUES(#{id},#{key},#{value},#{type})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+	DELETE FROM ERP_CODE WHERE ID=#{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpCode">
+	UPDATE ERP_CODE
+		<set>
+			<if test="key!=null and key!=''">
+			KEY=#{key},
+			</if>
+			<if test="value!=null and value!=''">
+			VALUE=#{value},
+			</if>
+			<if test="type!=null and type!=''" >
+			TYPE=#{type},
+			</if>
+		</set>
+		WHERE ID=#{id}
+	</update>
+	<!-- 按id查找 -->
+	<select id="getById" parameterType="java.lang.String" resultType="erpCode">
+	SELECT * FROM ERP_CODE WHERE ID=#{id}
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getAll" parameterType="java.lang.String" resultType="erpCode">
+	SELECT * FROM ERP_CODE WHERE TYPE LIKE '%${value}%'
+	</select>
+	
+	<!-- 根据类型查找 -->
+	<select id="getByType" parameterType="java.lang.String" resultType="erpCode" >
+	SELECT * FROM ERP_CODE WHERE TYPE LIKE #{type}
+	</select>
+	
+	<!-- 传递键和值 -->
+	<select id="getByKeyAndType" parameterType="String" resultType="erpCode">
+	SELECT * FROM ERP_CODE WHERE KEY=#{key} AND TYPE=#{type}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

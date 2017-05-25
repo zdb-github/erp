@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpJobMapper">
+	<insert id="add" parameterType="erpJob">
+		INSERT INTO ERP_JOB (JOB_ID,JOB_NAME,STATE)
+		VALUES(#{job_id},#{job_name},#{state})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_JOB WHERE JOB_ID =#{job_id}
+	</delete>
+	
+	<update id="update" parameterType="erpJob">
+		UPDATE ERP_JOB
+		<set>
+			
+			<if test="job_name!=null and job_name !=''">
+				JOB_NAME =#{job_name},
+			</if>
+			<if test="state!=null and state!=''">
+				STATE=#{state},
+			</if>
+		</set>
+		WHERE JOB_ID =#{job_id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpJob">
+		SELECT * FROM ERP_job WHERE JOB_NAME LIKE #{job_name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpJob">
+		SELECT * FROM ERP_JOB WHERE JOB_ID=#{job_id}
+	</select>
+	
+
+</mapper>

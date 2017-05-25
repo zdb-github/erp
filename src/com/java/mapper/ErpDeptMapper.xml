@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpDeptMapper">
+	
+	
+	<insert id="add" parameterType="erpDept">
+		INSERT INTO ERP_DEPT (DEPT_ID,NAME,SUBSIDIARY_ORGAN,STATE)
+		VALUES(#{dept_id},#{name},#{subsidiary_organ},#{state})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_DEPT WHERE DEPT_ID =#{dept_id}
+	</delete>
+	
+	<update id="update" parameterType="erpDept">
+		UPDATE ERP_DEPT
+		<set>
+			<if test="subsidiary_organ!=null and subsidiary_organ!=''">
+				SUBSIDIARY_ORGAN=#{subsidiary_organ},
+			</if>
+			<if test="name!=null and name !=''">
+				NAME =#{name},
+			</if>
+			<if test="state!=null and state!=''">
+				STATE=#{state},
+			</if>
+		</set>
+		WHERE DEPT_ID =#{dept_id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpDept">
+		SELECT * FROM ERP_DEPT WHERE NAME LIKE #{name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpDept">
+		SELECT * FROM ERP_DEPT WHERE DEPT_ID=#{dept_id}
+	</select>
+	
+	<select id="selectDept" parameterType="erpDept" resultType="erpDept">
+		SELECT * FROM ERP_DEPT
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="name!=null and name!=''">
+				AND NAME LIKE #{name}
+			</if>
+			<if test="subsidiary_organ!=null and subsidiary_organ!=''">
+				AND SUBSIDIARY_ORGAN LIKE #{subsidiary_organ}
+			</if>
+			<if test="state!=null and state!=''">
+				AND STATE LIKE #{state}
+			</if>
+		</trim>
+	</select>
+
+</mapper>

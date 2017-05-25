@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpPurchaseOrderMapper">
+	<!-- 采购订单表 -->
+	<select id="getAll" parameterType="java.lang.String" resultType="erpPurchaseOrder">
+		
+		SELECT PO_ID,CREATE_TIME,SUPPLIER_ID,DEPT_ID,PURCHASER_ID,WAREHOUSE_ID,PO_AMOUNT,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_PURCHASE_ORDER WHERE CREATE_TIME LIKE #{create_time}
+		
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultType="erpPurchaseOrder">
+		SELECT PO_ID,CREATE_TIME,SUPPLIER_ID,DEPT_ID,PURCHASER_ID,WAREHOUSE_ID,PO_AMOUNT,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_PURCHASE_ORDER WHERE PO_ID=#{po_id}
+	</select>
+	
+	
+	<!-- 多字段查询采购订单  -->
+	<select id="selectPo" parameterType="erpPurchaseOrder" resultType="erpPurchaseOrder">
+		SELECT PO_ID,CREATE_TIME,SUPPLIER_ID,DEPT_ID,PURCHASER_ID,WAREHOUSE_ID,PO_AMOUNT,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_PURCHASE_ORDER 
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="create_time!=null and create_time!=''">	<!--采购订单日期  -->
+				AND CREATE_TIME=#{create_time}
+			</if>
+			<if test="supplier_id!=null and supplier_id!=''">
+				AND SUPPLIER_ID=#{supplier_id}
+			</if>
+			<if test="dept_id!=null and dept_id!=''">
+				AND DEPT_ID=#{dept_id}
+			</if>
+			<if test="purchaser_id!=null and purchaser_id!=''">
+				AND PURCHASER_ID=#{purchaser_id}
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				AND WAREHOUSE_ID=#{warehouse_id}
+			</if>
+			<if test="organization_id!=null and organization_id!=''">
+				AND ORGANIZATION_ID=#{organization_id}
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''">
+				AND INVOICES_STATE=#{invoices_state}
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="add" parameterType="erpPurchaseOrder">
+		INSERT INTO ERP_PURCHASE_ORDER(PO_ID,CREATE_TIME,SUPPLIER_ID,DEPT_ID,PURCHASER_ID,WAREHOUSE_ID,PO_AMOUNT,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE)
+		VALUES(#{po_id},#{create_time},#{supplier_id},#{dept_id},#{purchaser_id},#{warehouse_id},#{po_amount},#{originator_id},#{invalid_id},#{organization_id},#{invoices_state})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM ERP_PURCHASE_ORDER WHERE PO_ID=#{po_id}
+	</delete>
+	
+	<update id="update" parameterType="erpPurchaseOrder">
+		UPDATE ERP_PURCHASE_ORDER 
+		<set>
+			<if test="create_time!=null and create_time!=''">	<!--采购订单日期  -->
+				CREATE_TIME=#{create_time},
+			</if>
+			<if test="supplier_id!=null and supplier_id!=''"><!-- 供应商id -->
+				SUPPLIER_ID=#{supplier_id},
+			</if>
+			<if test="dept_id!=null and dept_id!=''"><!-- 部门id -->
+				DEPT_ID=#{dept_id},
+			</if>
+			<if test="purchaser_id!=null and purchaser_id!=''"><!-- 采购员id -->
+				PURCHASER_ID=#{purchaser_id},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''"><!-- 仓库id -->
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+			<if test="po_amount!=null and po_amount!=''"><!--金额 -->
+				PO_AMOUNT=#{po_amount},
+			</if>
+			<if test="originator_id!=null and originator_id!=''"><!-- 制作人id -->
+				ORIGINATOR_ID=#{originator_id},
+			</if>
+			<if test="invalid_id!=null and invalid_id!=''"><!-- 作废人id -->
+				INVALID_ID=#{invalid_id},
+			</if>
+			<if test="organization_id!=null and organization_id!=''"><!-- 所属机构id -->
+				ORGANIZATION_ID=#{organization_id},
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''"><!-- 单据状态 -->
+				INVOICES_STATE=#{invoices_state},
+			</if>
+		</set>
+		WHERE PO_ID=#{po_id}
+	</update>
+	
+</mapper>

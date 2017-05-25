@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpResourceMapper">
+	<insert id="add" parameterType="erpResource">
+		INSERT INTO ERP_RESOURCE (ID,RESOURCE_NAME,DO_PATH,ROLE_TYPE)
+		VALUES(#{id},#{resource_name},#{do_path},#{role_type})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_RESOURCE WHERE ID =#{id}
+	</delete>
+	
+	<update id="update" parameterType="erpResource">
+		UPDATE ERP_RESOURCE
+		<set>
+			<if test="resource_name!=null and resource_name!=''">
+				RESOURCE_NAME=#{resource_name},
+			</if>
+			<if test="do_path!=null and do_path !=''">
+				DO_PATH =#{do_path},
+			</if>
+			<if test="role_type!=null and role_type!=''">
+				ROLE_TYPE=#{role_type},
+			</if>
+		</set>
+		WHERE ID =#{id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpResource">
+		SELECT * FROM ERP_RESOURCE WHERE RESOURCE_NAME LIKE #{resource_name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpResource">
+		SELECT * FROM ERP_RESOURCE WHERE ID=#{id}
+	</select>
+	<!--  -->
+	<select id="getByDo_path" parameterType="String" resultType="erpResource">
+		SELECT * FROM ERP_RESOURCE WHERE DO_PATH LIKE '%${do_path}%'
+	</select>
+	<!--  -->
+	<select id="getByRole_type" parameterType="String" resultType="erpResource">
+		SELECT * FROM ERP_RESOURCE WHERE ROLE_TYPE LIKE #{role_type}
+	</select>
+	
+	<select id="selectResource" parameterType="erpResource" resultType="erpResource">
+		SELECT * FROM ERP_RESOURCE
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="id!=null and id!=''">
+				AND ID LIKE #{id}
+			</if>
+			<if test="resource_name!=null and resource_name !=''">
+				AND RESOURCE_NAME LIKE #{resource_name},
+			</if>
+			<if test="do_path!=null and do_path!=''">
+				AND DO_PATH LIKE #{do_path},
+			</if>
+			<if test="role_type!=null and role_type!=''">
+				AND ROLE_TYPE LIKE #{role_prices},
+			</if>
+		</trim>
+	</select>
+	
+</mapper>

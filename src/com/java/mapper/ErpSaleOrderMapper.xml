@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpSaleOrderMapper">
+	
+	<select id="getAll" parameterType="java.lang.String" resultType="erpSaleOrder">
+		SELECT SO_ID,CREATE_TIME,SALE_TYPE,DEPT_ID,SALESMAN_ID,CUSTOMER_ID,DELIVERY_WAY,
+		MONEY,PAYMENT_METHOD,ORIGINATOR_ID,INVALID_ID,
+		ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_ORDER WHERE CREATE_TIME LIKE #{create_time}
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultType="erpSaleOrder">
+		SELECT SO_ID,CREATE_TIME,SALE_TYPE,DEPT_ID,SALESMAN_ID,CUSTOMER_ID,DELIVERY_WAY,
+		MONEY,PAYMENT_METHOD,ORIGINATOR_ID,INVALID_ID,
+		ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_ORDER WHERE SO_ID=#{so_id}
+	</select>
+	
+	<select id="selectSaleOrder" parameterType="java.lang.String" resultType="erpSaleOrder">
+		SELECT SO_ID,CREATE_TIME,SALE_TYPE,DEPT_ID,SALESMAN_ID,CUSTOMER_ID,DELIVERY_WAY,
+		MONEY,PAYMENT_METHOD,ORIGINATOR_ID,INVALID_ID,
+		ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_ORDER
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="create_time!=null and create_time!=''">
+				AND CREATE_TIME=#{create_time}
+			</if>
+			<if test="sale_type!=null and sale_type!=''">
+				AND SALE_TYPE=#{sale_type}
+			</if>
+			<if test="dept_id!=null and dept_id!=''">
+				AND DEPT_ID=#{dept_id}
+			</if>
+			<if test="customer_id!=null and customer_id!=''">
+				AND CUSTOMER_ID=#{customer_id}
+			</if>
+			<if test="payment_method!=null and payment_method!=''">
+				AND PAYMENT_METHOD=#{payment_method}
+			</if>
+			<if test="delivery_way!=null and delivery_way!=''">
+				AND DELIVERY_WAY=#{delivery_way}
+			</if>
+			<if test="salesman_id!=null and salesman_id!=''">
+				AND SALESMAN_ID=#{salesman_id}
+			</if>
+			<if test="organization_id!=null and organization_id!=''">
+				AND ORGANIZATION_ID=#{organization_id}
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''">
+				AND INVOICES_STATE=#{invoices_state}
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="add" parameterType="erpSaleOrder">
+		INSERT INTO ERP_SALE_ORDER(SO_ID,CREATE_TIME,SALE_TYPE,DEPT_ID,SALESMAN_ID,CUSTOMER_ID,DELIVERY_WAY,
+		MONEY,PAYMENT_METHOD,ORIGINATOR_ID,INVALID_ID,
+		ORGANIZATION_ID,INVOICES_STATE)
+		VALUES(#{so_id},#{create_time},#{sale_type},#{dept_id},#{salesman_id},#{customer_id},
+		#{delivery_way},#{money},#{payment_method},#{originator_id},#{invalid_id},
+		#{organization_id},#{invoices_state})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM ERP_SALE_ORDER WHERE SO_ID=#{so_id}
+	</delete>
+	
+	<update id="update" parameterType="erpSaleOrder">
+		UPDATE ERP_SALE_ORDER
+		<set>
+			<if test="create_time!=null and create_time!=''">
+				CREATE_TIME=#{create_time},
+			</if>
+			<if test="sale_type!=null and sale_type!=''">
+				SALE_TYPE=#{sale_type},
+			</if>
+			<if test="dept_id!=null and dept_id!=''">
+				DEPT_ID=#{dept_id},
+			</if>
+			<if test="salesman_id!=null and salesman_id!=''">
+				SALESMAN_ID=#{salesman_id},
+			</if>
+			<if test="customer_id!=null and customer_id!=''">
+				CUSTOMER_ID=#{customer_id},
+			</if>
+			<if test="payment_method!=null and payment_method!=''">
+				PAYMENT_METHOD=#{payment_method},
+			</if>
+			<if test="delivery_way!=null and delivery_way!=''">
+				DELIVERY_WAY=#{delivery_way},
+			</if>
+			<if test="money!=null and money!=''">
+				MONEY=#{money},
+			</if>
+			<if test="originator_id!=null and originator_id!=''"><!-- 制作人id -->
+				ORIGINATOR_ID=#{originator_id},
+			</if>
+			<if test="invalid_id!=null and invalid_id!=''"><!-- 作废人id -->
+				INVALID_ID=#{invalid_id},
+			</if>
+			
+			<if test="organization_id!=null and organization_id!=''">
+				ORGANIZATION_ID=#{organization_id},
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''">
+				INVOICES_STATE=#{invoices_state},
+			</if>
+		</set>
+		WHERE SO_ID=#{so_id}
+	</update>
+
+</mapper>

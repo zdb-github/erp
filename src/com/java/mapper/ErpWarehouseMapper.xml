@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpWarehouseMapper">
+	
+	
+	<insert id="add" parameterType="erpWarehouse">
+		INSERT INTO ERP_WAREHOUSE (WAREHOUSE_ID,NAME,PRINCIPAL,PHONE,SUBSIDIARY_ORGAN,CREATE_TIME,STATE)
+		VALUES(#{warehouse_id},#{name},#{principal},#{phone},#{subsidiary_organ},#{create_time},#{state})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_WAREHOUSE WHERE WAREHOUSE_ID =#{warehouse_id}
+	</delete>
+	
+	<update id="update" parameterType="erpWarehouse">
+		UPDATE ERP_WAREHOUSE 
+		<set>
+			<if test="subsidiary_organ!=null and subsidiary_organ!=''">
+				SUBSIDIARY_ORGAN=#{subsidiary_organ},
+			</if>
+			<if test="name!=null and name !=''">
+				NAME =#{name},
+			</if>
+			<if test="principal!=null and principal!=''">
+				PRINCIPAL= #{principal},
+			</if>
+			<if test="phone!=null and phone !=''">
+				PHONE = #{phone},
+			</if>
+			<if test="create_time!=null and create_time!=''">
+				 CREATE_TIME = #{create_time},
+			</if>
+			<if test="state!=null and state!=''">
+				STATE=#{state},
+			</if>
+		</set>
+		WHERE WAREHOUSE_ID =#{warehouse_id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpWarehouse">
+		SELECT * FROM ERP_WAREHOUSE WHERE NAME LIKE #{name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpWarehouse">
+		SELECT * FROM ERP_WAREHOUSE WHERE WAREHOUSE_ID=#{warehouse_id}
+	</select>
+	
+	<select id="selectWH" parameterType="erpWarehouse" resultType="erpWarehouse">
+		SELECT * FROM ERP_DEPT
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="name!=null and name!=''">
+				AND NAME LIKE #{name}
+			</if>
+			<if test="subsidiary_organ!=null and subsidiary_organ!=''">
+				AND SUBSIDIARY_ORGAN LIKE #{subsidiary_organ}
+			</if>
+			<if test="state!=null and state!=''">
+				AND STATE LIKE #{state}
+			</if>
+		</trim>
+	</select>
+
+
+
+</mapper>

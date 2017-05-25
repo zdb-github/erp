@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpPurchaseGoodsMapper">
+	<!-- 查询所有 -->
+	<select id="getALL" parameterType="java.lang.String" resultType="erpPurchaseGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,PURCHASE_ID
+		FROM ERP_PURCHASE_GOODS WHERE GOODS_ID LIKE #{goods_id}
+	</select>
+
+	<!-- 通过id查找 -->
+	<select id="getById" parameterType="java.lang.String" resultType="erpPurchaseGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,PURCHASE_ID
+		FROM ERP_PURCHASE_GOODS WHERE ID=#{id}
+	</select>
+	
+	<!-- 通过采购订单主表的id查找 -->
+	<select id="getByPurchaseId" parameterType="java.lang.String" resultType="erpPurchaseGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,PURCHASE_ID
+		FROM ERP_PURCHASE_GOODS WHERE PURCHASE_ID=#{purchase_id}
+	</select>
+	
+	<!--通过商品id查找 -->
+	<select id="getByGoodsId" parameterType="java.lang.String" resultType="erpPurchaseGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,PURCHASE_ID
+		FROM ERP_PURCHASE_GOODS WHERE GOODS_ID=#{goods_id}
+	</select>
+	
+	<!-- 通过主表id查询总金额 -->
+	<select id="getAmount" parameterType="java.lang.String" resultType="int">
+		SELECT SUM(GOODS_NUM*GOODS_PRICES)
+		FROM ERP_PURCHASE_GOODS
+		WHERE PURCHASE_ID=#{purchase_id}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpPurchaseGoods">
+		INSERT INTO ERP_PURCHASE_GOODS (ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,PURCHASE_ID)
+		VALUES(#{id},#{goods_id},#{goods_num},#{goods_prices},#{remark},#{purchase_id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpPurchaseGoods">
+		UPDATE ERP_PURCHASE_GOODS 
+		<set>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id},
+			</if>
+			<if test="goods_num!=null and goods_num!=''">
+				GOODS_NUM=#{goods_num},
+			</if>
+			<if test="goods_prices!=null and goods_prices!=''">
+				GOODS_PRICES=#{goods_prices},
+			</if>
+			<if test="remark!=null and remark!=''">
+				REMARK=#{remark},
+			</if>
+			<if test="purchase_id!=null and purchase_id!=''">
+				PURCHASE_ID=#{purchase_id},
+			</if>
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM ERP_PURCHASE_GOODS WHERE ID=#{id}
+	</delete>
+
+</mapper>

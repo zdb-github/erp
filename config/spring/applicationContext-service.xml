@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<!-- 黄 -->
+	<!-- 采购订单主表 -->
+	<bean id="erpPurchaseOrderService" class="com.java.service.ErpPurchaseOrderServiceImpl"></bean>
+	
+	<!-- 采购订单商品明细表 -->
+	<bean id="erpPoGoodsService" class="com.java.service.ErpPoGoodsServiceImpl"/>
+	
+	<!-- 采购单主表 -->
+	<bean id="erpPurchaseService" class="com.java.service.ErpPurchaseServiceImpl"/>
+	
+	<!-- 采购单商品明细表 -->
+	<bean id="erpPurchaseGoodsService" class="com.java.service.ErpPurchaseGoodsServiceImpl"/>
+	
+	<!-- 销售单主表 -->
+	<bean id="erpSaleService" class="com.java.service.ErpSaleServiceImpl"/>
+	
+	<!-- 销售订单主表 -->
+	<bean id="erpSaleOrderService" class="com.java.service.ErpSaleOrderServiceImpl"/>
+	
+	<!-- 销售单商品明细表 -->
+	<bean id="erpSaleGoodsService" class="com.java.service.ErpSaleGoodsServiceImpl"/>
+	
+	<!-- 销售订单商品明细表 -->
+	<bean id="erpSoGoodsService" class="com.java.service.ErpSoGoodsServiceImpl"/>
+	
+	<!-- 销售退货主表 -->
+	<bean id="erpSaleReturnService" class="com.java.service.ErpSaleReturnServiceImpl"/>
+	
+	<!-- 销售退货商品明细表 -->
+	<bean id="erpSrGoodsService" class="com.java.service.ErpSrGoodsServiceImpl"/>
+	
+	
+	
+	<!--周 用户 的service -->
+		 
+		<bean id="erpAccountService" class="com.java.service.ErpAccountServiceImpl"/>
+		<bean id="erpCodeService" class="com.java.service.ErpCodeServiceImpl"/>
+		<bean id="erpCommentService" class="com.java.service.ErpCommentServiceImpl"/>
+		<bean id="erpCustomerService" class="com.java.service.ErpCustomerServiceImpl"/>
+		<bean id="erpReplyService" class="com.java.service.ErpReplyServiceImpl"/>
+		<bean id="erpUserService" class="com.java.service.ErpUserServiceImpl"/>
+		
+		
+		
+		
+	<!--崔   部门service -->
+		<bean id="erpDeptService" class="com.java.service.ErpDeptServiceImpl"/>
+		<!-- 商品service -->
+		<bean id="erpGoodsService" class="com.java.service.ErpGoodsServiceImpl"/>
+		<!-- 职位资源中间表service -->
+		<bean id="erpJobResourceService" class="com.java.service.ErpJobResourceServiceImpl"/>
+		<!-- 职位service -->
+		<bean id="erpJobService" class="com.java.service.ErpJobServiceImpl"/>
+		<!-- 职位用户中间表service -->
+		<bean id="erpJobUserService" class="com.java.service.ErpJobUserServiceImpl"/>
+		<!-- 机构service -->
+		<bean id="erpOrganizationService" class="com.java.service.ErpOrganizationServiceImpl"/>
+		<!-- 资源service -->
+		<bean id="erpResourceService" class="com.java.service.ErpResourceServiceImpl"/>
+		<!-- 仓库service -->
+		<bean id="erpWarehouseService" class="com.java.service.ErpWarehouseServiceImpl"/>
+	
+	<!-- 张 -->
+		<bean id="erpCashStatementService" class="com.java.service.ErpCashStatementServiceImpl"/>
+		<bean id="erpBlitemService" class="com.java.service.ErpBlitemServiceImpl"/>
+		<bean id="erpGoodsSaleService" class="com.java.service.ErpGoodsSaleServiceImpl"/>
+		<bean id="erpRequisitionService" class="com.java.service.ErpRequisitionServiceImpl"/>
+	
+</beans>

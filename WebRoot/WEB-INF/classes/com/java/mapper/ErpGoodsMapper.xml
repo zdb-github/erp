@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpGoodsMapper">
+	<insert id="add" parameterType="erpGoods">
+		INSERT INTO ERP_GOODS (GOODS_ID,GOODS_NAME,GOODS_NUM,GOODS_PRICES,GOODS_TYPE,GOODS_UNIT,WAREHOUSE_ID)
+		VALUES(#{goods_id},#{goods_name},#{goods_num},#{goods_prices},#{goods_type},#{goods_unit},#{warehouse_id})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_GOODS WHERE GOODS_ID =#{goods_id}
+	</delete>
+	
+	<update id="update" parameterType="erpGoods">
+		UPDATE ERP_GOODS
+		<set>
+			<if test="goods_name!=null and goods_name!=''">
+				GOODS_NAME=#{goods_name},
+			</if>
+			<if test="goods_num!=null and goods_num !=''">
+				GOODS_NUM =#{goods_num},
+			</if>
+			<if test="goods_prices!=null and goods_prices!=''">
+				GOODS_PRICES=#{goods_prices},
+			</if>
+			<if test="goods_type!=null and goods_type!=''">
+				GOODS_TYPE=#{goods_type},
+			</if>
+			<if test="goods_unit!=null and goods_unit!=''">
+				GOODS_UNIT=#{goods_unit},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+		</set>
+		WHERE GOODS_ID =#{goods_id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpGoods">
+		SELECT * FROM ERP_GOODS WHERE GOODS_NAME LIKE #{goods_name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpGoods">
+		SELECT * FROM ERP_GOODS WHERE GOODS_ID=#{goods_id}
+	</select>
+	
+	<select id="selestOrgan" parameterType="erpGoods" resultType="erpGoods">
+		SELECT * FROM ERP_GOODS
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="goods_name!=null and goods_name!=''">
+				AND GOODS_NAME LIKE #{goods_name}
+			</if>
+			<if test="goods_num!=null and goods_num !=''">
+				AND GOODS_NUM LIKE #{goods_num},
+			</if>
+			<if test="goods_prices!=null and goods_prices!=''">
+				AND GOODS_PRICES LIKE #{goods_prices},
+			</if>
+			<if test="goods_type!=null and goods_type!=''">
+				AND GOODS_TYPE LIKE #{goods_type},
+			</if>
+			<if test="goods_unit!=null and goods_unit!=''">
+				AND GOODS_UNIT LIKE #{goods_unit},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				AND WAREHOUSE_ID LIKE #{warehouse_id},
+			</if>
+		</trim>
+	</select>
+
+</mapper>

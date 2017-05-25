@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpSaleReturnMapper">
+	
+	<select id="getAll" parameterType="java.lang.String" resultType="erpSaleReturn">
+		SELECT SR_ID,CREATE_TIME,CUSTOMER_ID,MONEY,PAYMENT_METHOD,EMPLOYEE_ID,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_RETURN WHERE CREATE_TIME LIKE #{create_time}
+	</select>
+		
+	<select id="getById" parameterType="java.lang.String" resultType="erpSaleReturn">
+		SELECT SR_ID,CREATE_TIME,CUSTOMER_ID,MONEY,PAYMENT_METHOD,EMPLOYEE_ID,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_RETURN WHERE SR_ID=#{sr_id}
+	</select>
+	
+	<select id="selectSaleReturn" parameterType="erpSaleReturn" resultType="erpSaleReturn">
+		SELECT SR_ID,CREATE_TIME,CUSTOMER_ID,MONEY,PAYMENT_METHOD,EMPLOYEE_ID,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE
+		FROM ERP_SALE_RETURN 
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="create_time!=null and create_time!=''">
+				AND CREATE_TIME=#{create_time}
+			</if>
+			<if test="customer_id!=null and customer_id!=''">
+				AND CUSTOMER_ID=#{customer_id}
+			</if>
+			
+			<if test="payment_method!=null and payment_method!=''">
+				AND PAYMENT_METHOD=#{payment_method}
+			</if>
+			<if test="employee_id!=null and employee_id!=''">
+				AND EMPLOYEE_ID=#{employee_id}
+			</if>
+			
+			<if test="organization_id!=null and organization_id!=''">
+				AND ORGANIZATION_ID=#{organization_id}
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''">
+				AND INVOICES_STATE=#{invoices_state}
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="add" parameterType="erpSaleReturn">
+		INSERT INTO ERP_SALE_RETURN(SR_ID,CREATE_TIME,CUSTOMER_ID,MONEY,PAYMENT_METHOD,EMPLOYEE_ID,ORIGINATOR_ID,INVALID_ID,ORGANIZATION_ID,INVOICES_STATE)
+		VALUES(#{sr_id},#{create_time},#{customer_id},#{money},#{payment_method},#{employee_id},#{originator_id},#{invalid_id},#{organization_id},#{invoices_state})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM ERP_SALE_RETURN WHERE SR_ID=#{sr_id}
+	</delete>
+	
+	<update id="update" parameterType="erpSaleReturn">
+		UPDATE ERP_SALE_RETURN 
+		<set>
+			<if test="create_time!=null and create_time!=''"><!-- 退货日期 -->
+				CREATE_TIME=#{create_time},
+			</if>
+			<if test="customer_id!=null and customer_id!=''"><!-- 客户id -->
+				CUSTOMER_ID=#{customer_id},
+			</if>
+			<if test="payment_method!=null and payment_method!=''"><!-- 支付方式 -->
+				PAYMENT_METHOD=#{payment_method},
+			</if>
+			<if test="employee_id!=null and employee_id!=''"><!-- 操作人id -->
+				EMPLOYEE_ID=#{employee_id},
+			</if>
+			
+			<if test="organization_id!=null and organization_id!=''"><!-- 所属机构id -->
+				ORGANIZATION_ID=#{organization_id},
+			</if>
+			<if test="invoices_state!=null and invoices_state!=''"><!-- 单据状态 -->
+				INVOICES_STATE=#{invoices_state},
+			</if>
+			<if test="originator_id!=null and originator_id!=''"><!-- 制作人id -->
+				ORIGINATOR_ID=#{originator_id},
+			</if>
+			<if test="invalid_id!=null and invalid_id!=''"><!-- 作废人id -->
+				INVALID_ID=#{invalid_id},
+			</if>
+			<if test="money!=null and money!=''"><!-- 金额 -->
+				MONEY=#{money},
+			</if>
+		
+		</set>
+		WHERE SR_ID=#{sr_id}
+	</update>
+	
+</mapper>

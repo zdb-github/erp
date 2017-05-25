@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpGoodsSaleMapper">
+	
+	<!-- 商品销量 -->
+	<!-- 查询所有的 -->
+	<select id="getAll" parameterType="String" resultType="erpGoodsSale">
+		SELECT GOODS_SALE_ID,GOODS_ID,NUM,WAREHOUSE_ID,QUARTER,MONTH,SALE_TIME,CUSTOMER_ID
+		FROM ERP_GOODS_SALE
+		WHERE QUARTER LIKE #{quarter}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpGoodsSale">
+		INSERT INTO ERP_GOODS_SALE (GOODS_SALE_ID,GOODS_ID,NUM,WAREHOUSE_ID,QUARTER,MONTH,SALE_TIME,CUSTOMER_ID)
+		 VALUES (#{goods_sale_id},#{goods_id},#{num},#{warehouse_id},#{quarter},#{month},#{sale_time},#{customer_id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpGoodsSale">
+		UPDATE ERP_PO_GOODS 
+		<set>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id},
+			</if>
+			<if test="num!=null and num!=''">
+				NUM=#{num},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+			<if test="quarter!=null and quarter!=''">
+				QUARTER=#{quarter}
+			</if>
+			<if test="month!=null and month!=''">
+				MONTH=#{month}
+			</if>
+			<if test="sale_time!=null and sale_time!=''" >
+				SALE_TIME = #{sale_time}
+			</if>
+			<if test="customer_id!=null and customer_id!=''">
+				CUSTOMER_ID = #{customer_id}
+			</if>
+			
+		</set>
+		WHERE GOODS_SALE _ID=#{goods_sale_id}
+	</update>
+	
+	<select id="getById" parameterType="String" resultType="erpGoodsSale">
+		SELECT GOODS_SALE_ID,GOODS_ID,NUM,WAREHOUSE_ID,QUARTER,MONTH,SALE_TIME,CUSTOMER_ID
+		FROM ERP_GOODS_SALE
+		WHERE GOODS_SALE _ID=#{goods_sale_id}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_GOODS_SALE WHERE GOODS_SALE_ID=#{goods_sale_id}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

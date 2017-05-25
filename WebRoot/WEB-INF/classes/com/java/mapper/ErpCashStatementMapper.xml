@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpCashStatementMapper">
+	
+	<!-- 这是一张仓库余额的-->
+	
+	<!-- 查看余额表 -->
+	<select id="getNum" parameterType="String" resultType="int">
+		SELECT GOODS_NUM FROM ERP_CASH_STATEMENT WHERE GOODS_ID=#{goods_id} AND WAREHOUSE_ID=#{warehouse_id}
+	</select>
+	<!-- 根据仓库的id查询每种商品的余额量 -->
+	<select id="getByWarehouseId" parameterType="String" resultType="erpCashStatement">
+		SELECT STATEMENT_ID,GOODS_ID,GOODS_NUM,WAREHOUSE_ID FROM ERP_CASH_STATEMENT   WHERE WAREHOUSE_ID=#{warehouse_id}	
+	</select>
+	<!-- 通过仓库的ID和商品的ID获取商品的集合 -->
+	<select id="getByWIAndGI" parameterType="String" resultType="erpCashStatement">
+		SELECT STATEMENT_ID,GOODS_ID,GOODS_NUM,WAREHOUSE_ID FROM ERP_CASH_STATEMENT   WHERE WAREHOUSE_ID=#{warehouse_id} AND GOODS_ID=#{goods_id}	
+	</select>
+	
+	
+	<!-- 查询所有 -->
+	<select id="getAll" parameterType="String" resultType="erpCashStatement">
+		SELECT STATEMENT_ID,GOODS_ID,WAREHOUSE_ID,GOODS_NUM FROM ERP_CASH_STATEMENT
+		WHERE GOODS_ID LIKE #{goods_id}
+	</select>
+	
+	<!-- 添加仓库余额 -->
+	<insert id="add" parameterType="erpCashStatement" >
+		INSERT INTO ERP_CASH_STATEMENT (STATEMENT_ID,GOODS_ID,WAREHOUSE_ID,GOODS_NUM) VALUES (#{statement_id},#{goods_id},#{warehouse_id},#{goods_num})
+	</insert>
+	
+	<!-- 修改仓库余额 -->
+	<update id="update" parameterType="erpCashStatement">
+		UPDATE ERP_CASH_STATEMENT 
+		<set>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+			<if test="true">
+				GOODS_NUM=#{goods_num},
+			</if>
+			
+		</set>
+		WHERE STATEMENT_ID=#{statement_id}
+	</update>
+	
+	<!-- 删除仓库余额 -->
+	<delete id="delete" parameterType="erpCashStatement">
+		DELETE FROM ERP_CASH_STATEMENT WHERE STATEMENT_ID=#{statement_id}
+	</delete>
+	
+	<!-- 通过id查找 -->
+	<select id="getById" parameterType="String" resultType="erpCashStatement">
+		SELECT STATEMENT_ID,GOODS_ID,WAREHOUSE_ID,GOODS_NUM FROM ERP_CASH_STATEMENT
+		WHERE STATEMENT_ID=#{statement_id}
+	</select>
+	
+	
+	<!-- 
+	//根据仓库的id和商品的id更新商品的数量
+	public void updateNum(@Param("warehouse_id") String warehouse_id,@Param("goods_id") String goods_id);
+	
+	
+	 -->
+	<update id="updateNum" parameterType="erpCashStatement">
+		UPDATE ERP_CASH_STATEMENT 
+		<set>
+			
+			<if test="goods_num!=null and goods_num!=''">
+				GOODS_NUM=#{goods_num},
+			</if>
+			
+		</set>
+		WHERE WAREHOUSE_ID=#{warehouse_id} AND GOODS_ID=#{goods_id}
+	</update>
+	
+	
+</mapper>

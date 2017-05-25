@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpAccountMapper" >
+	<!-- 添加用户 -->
+  <insert id="add" parameterType="erpAccount">
+  INSERT INTO ERP_ACCOUNT(ID,USERNAME,PASSWORD,UTYPE,CREATE_TIME,LAST_LOGIN_TIME,USER_ID) VALUES(#{id},#{username},
+  #{password},#{uType},#{create_time},#{last_login_time},#{user_id})
+  </insert>
+  
+  	<!-- 删除用户 -->
+  <delete id="delete" parameterType="java.lang.String">
+  DELETE FROM ERP_ACCOUNT WHERE ID=#{id}
+  </delete>
+  	
+  	<!-- 修改用户 -->
+  <update id="update" parameterType="erpAccount">
+  UPDATE ERP_ACCOUNT
+  	 <set> 
+  	 	<if test="username!=null and username!=''">
+  		USERNAME=#{username},
+  		</if>
+  		
+  		<if test="password!=null and password!=''">
+ 	 	PASSWORD=#{password},
+  		</if>
+  		
+  		<if test="uType!=null and uType!=''">
+ 	 	UTYPE=#{uType},
+  		</if>
+  		
+  		<if test="create_time!=null and create_time!=''">
+ 	 	CREATE_TIME=#{create_time},
+  		</if>
+  		
+  		<if test="last_login_time!=null and last_login_time!=''">
+  		LAST_LOGIN_TIME=#{last_login_time},
+  		</if>
+  		
+  		<if test="user_id!=null and user_id!=''">
+  		USER_ID=#{user_id},
+  		</if>
+  	 </set>
+  	WHERE ID=#{id}
+  </update>
+   
+   <!-- 根据id查询 -->
+   <select id="getById" parameterType="java.lang.String" resultType="erpAccount">
+   SELECT * FROM ERP_ACCOUNT WHERE ID=#{id}
+   </select>
+   
+   <!-- 查询全部 -->
+   <select id="getAll"  parameterType="java.lang.String" resultType="erpAccount">
+   SELECT * FROM ERP_ACCOUNT WHERE USERNAME LIKE '%${value}%'
+   </select>
+   
+   <!-- 检查登录 -->
+   <select id="checkLogin" parameterType="String" resultType="erpAccount" >
+   SELECT * FROM ERP_ACCOUNT WHERE USERNAME=#{username} and PASSWORD=#{password}
+   </select>
+  
+   <!-- zdb -->
+   <select id="checkTheSameUsername" parameterType="String" resultType="int">
+   		SELECT COUNT(*) FROM ERP_ACCOUNT WHERE USERNAME =#{username}
+   </select>
+   
+   
+   <!-- 获得所有用户及每个用户的所有评论 -->
+   <select id="getErpAccountAndErpCommentAll" parameterType="String" resultType="erpAccount">
+   
+  		SELECT ea.ID,ea.USERNAME,ea.PASSWORD,ea.UTYPE,ea.CREATE_TIME,ea.LAST_LOGIN_TIME,
+  		ea.USER_ID,ec.ID eid,ec.CONTENT,ec.ERP_ACCOUNT_ID FROM ERP_ACCOUNT ea,ERP_COMMENT ec
+		WHERE ea.ID=ec.ERP_ACCOUNT_ID
+   
+   </select>
+   
+   <!-- 获得所有用户及每个用户的所有评论及每个评论的所有回复信息 -->
+   <select id="getErpAccountAndErpCommentAndErpReplyAll" parameterType="String" resultType="erpAccount">
+   		SELECT ea.ID,ea.USERNAME,ea.PASSWORD,ea.UTYPE,ea.CREATE_TIME,ea.LAST_LOGIN_TIME,
+  		ea.USER_ID,ec.ID eid,ec.CONTENT,ec.ACCOUNT_ID,er.ID ecid,er.CONTENT ercontent,
+  		er.COMMENT_ID FROM ERP_ACCOUNT ea,ERP_COMMENT ec,ERP_REPLY er
+		WHERE ea.ID=ec.ACCOUNT_ID AND ec.ID=er.COMMENT_ID
+   	
+   </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

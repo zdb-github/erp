@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.java.mapper.ErpOrganizationMapper">
+	<insert id="add" parameterType="erpOrganization">
+		INSERT INTO ERP_ORGANIZATION (ORGANIZATION_ID,NAME,ADDRESS,STATE)
+		VALUES(#{organization_id},#{name},#{address},#{state})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ERP_ORGANIZATION WHERE ORGANIZATION_ID =#{organization_id}
+	</delete>
+	
+	<update id="update" parameterType="erpOrganization">
+		UPDATE ERP_ORGANIZATION
+		<set>
+			<if test="address!=null and address!=''">
+				ADDRESS=#{address},
+			</if>
+			<if test="name!=null and name !=''">
+				NAME =#{name},
+			</if>
+			<if test="state!=null and state!=''">
+				STATE=#{state},
+			</if>
+		</set>
+		WHERE ORGANIZATION_ID =#{organization_id}
+	</update>
+	
+	<select id="getAll" parameterType="String" resultType="erpOrganization">
+		SELECT * FROM ERP_ORGANIZATION WHERE NAME LIKE #{name}
+	</select>
+	
+	<select id="getById" parameterType="String" resultType="erpOrganization">
+		SELECT * FROM ERP_ORGANIZATION WHERE ORGANIZATION_ID=#{organization_id}
+	</select>
+	
+	<select id="selestOrgan" parameterType="erpOrganization" resultType="erpOrganization">
+		SELECT * FROM ERP_ORGANIZATION
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="name!=null and name!=''">
+				AND NAME LIKE #{name}
+			</if>
+			<if test="address!=null and address!=''">
+				AND ADDRESS LIKE #{address}
+			</if>
+			<if test="state!=null and state!=''">
+				AND STATE LIKE #{state}
+			</if>
+		</trim>
+	</select>
+
+</mapper>

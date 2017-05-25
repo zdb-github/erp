@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.mapper.ErpSaleGoodsMapper">
+	<!-- 查询所有 -->
+	<select id="getALL" parameterType="java.lang.String" resultType="erpSaleGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,SALE_ID,WAREHOUSE_ID
+		FROM ERP_SALE_GOODS WHERE GOODS_ID LIKE #{goods_id}
+	</select>
+
+	<!-- 通过id查找 -->
+	<select id="getById" parameterType="java.lang.String" resultType="erpSaleGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,SALE_ID,WAREHOUSE_ID
+		FROM ERP_SALE_GOODS WHERE ID=#{id}
+	</select>
+	
+	<!-- 通过采购订单主表的id查找 -->
+	<select id="getBySaleId" parameterType="java.lang.String" resultType="erpSaleGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,SALE_ID,WAREHOUSE_ID
+		FROM ERP_SALE_GOODS WHERE SALE_ID=#{sale_id}
+	</select>
+	
+	<!--通过商品id查找 -->
+	<select id="getByGoodsId" parameterType="java.lang.String" resultType="erpSaleGoods">
+		SELECT ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,SALE_ID,WAREHOUSE_ID
+		FROM ERP_SALE_GOODS WHERE GOODS_ID=#{goods_id}
+	</select>
+	
+	<select id="getAmount" parameterType="java.lang.String" resultType="int">
+		SELECT SUM(GOODS_NUM*GOODS_PRICES)
+		FROM ERP_SALE_GOODS
+		WHERE SALE_ID=#{sale_id}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="add" parameterType="erpSaleGoods">
+		INSERT INTO ERP_SALE_GOODS (ID,GOODS_ID,GOODS_NUM,GOODS_PRICES,REMARK,SALE_ID,WAREHOUSE_ID)
+		VALUES(#{id},#{goods_id},#{goods_num},#{goods_prices},#{remark},#{sale_id},#{warehouse_id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="erpSaleGoods">
+		UPDATE ERP_SALE_GOODS
+		<set>
+			<if test="goods_id!=null and goods_id!=''">
+				GOODS_ID=#{goods_id},
+			</if>
+			<if test="goods_num!=null and goods_num!=''">
+				GOODS_NUM=#{goods_num},
+			</if>
+			<if test="goods_prices!=null and goods_prices!=''">
+				GOODS_PRICES=#{goods_prices},
+			</if>
+			<if test="remark!=null and remark!=''">
+				REMARK=#{remark},
+			</if>
+			<if test="sale_id!=null and sale_id!=''">
+				SALE_ID=#{sale_id},
+			</if>
+			<if test="warehouse_id!=null and warehouse_id!=''">
+				WAREHOUSE_ID=#{warehouse_id},
+			</if>
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM ERP_SALE_GOODS WHERE ID=#{id}
+	</delete>
+
+</mapper>
